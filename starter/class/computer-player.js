@@ -242,29 +242,34 @@ class ComputerPlayer {
 
   }
 
-  // minimax algorithm, based by Garrett's Tic Tac Toe https://codepen.io/garbot/pen/bWLGGL
-  static minimax(grid, symbol) {
+  // minimax algorithm, based on Garrett's Tic Tac Toe https://codepen.io/garbot/pen/bWLGGL
+  static minimax(grid, symbol, depth = 0) {
 
-    let depth = 9 - ComputerPlayer.getValidMoves(grid).length;
     let opponent = symbol === "X" ? "O" : "X";
-
-    // make a deep copy of the grid
-    let newGrid = [];
-
-    for (let row = 0; row < grid.length; row++) {
-      newGrid.push(grid[row].slice());
-    }
 
     const winner = ComputerPlayer.checkWin(grid);
 
     if (!winner) {
+      // make a deep copy of the grid
+      let newGrid = [];
+
+      for (let row = 0; row < grid.length; row++) {
+        newGrid.push(grid[row].slice());
+      }
+
       const validMoves = ComputerPlayer.getValidMoves(grid);
       const score = [];
 
       for (let i = 0; i < validMoves.length; i++) {
         const move = validMoves[i];
         newGrid[move.row][move.col] = symbol;
-        score.push(ComputerPlayer.minimax(newGrid, opponent));
+        if (symbol === ComputerPlayer.symbol) {
+          depth++;
+          score.push(ComputerPlayer.minimax(newGrid, opponent, depth));
+          depth--;
+        } else {
+          score.push(ComputerPlayer.minimax(newGrid, opponent, depth));
+        }
         newGrid[move.row][move.col] = " ";
       }
 
