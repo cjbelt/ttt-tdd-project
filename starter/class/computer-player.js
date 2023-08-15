@@ -150,6 +150,7 @@ class ComputerPlayer {
       }
     }
 
+    const validMoves = ComputerPlayer.getValidMoves(grid);
 
     // horizontal checking
     for (let i = 0; i < grid.length; i++) {
@@ -159,7 +160,7 @@ class ComputerPlayer {
       }
 
       if (count === 2) {
-        const move = ComputerPlayer.getValidMoves(grid).reduce((accum, element) => {
+        const move = validMoves.reduce((accum, element) => {
           if (element.row === i) {
             return element;
           }
@@ -180,7 +181,7 @@ class ComputerPlayer {
       }
 
       if (count === 2) {
-        const move = ComputerPlayer.getValidMoves(grid).reduce((accum, element) => {
+        const move = validMoves.reduce((accum, element) => {
           if (element.col === j) {
             return element;
           }
@@ -204,16 +205,18 @@ class ComputerPlayer {
     }
 
     if (count === 2) {
-      const move = ComputerPlayer.getValidMoves(grid).reduce((accum, element) => {
+      // const move = validMoves.reduce((accum, element) => {
 
-        if (element.row === remaining.row && element.col === remaining.col) {
-          return element;
-        }
+      //   if (element.row === remaining.row && element.col === remaining.col) {
+      //     return element;
+      //   }
 
-        return accum;
-      }, null);
+      //   return accum;
+      // }, null);
 
-      if (move) return move;
+      // if (move) return move;
+
+      return remaining;
     }
 
 
@@ -228,16 +231,18 @@ class ComputerPlayer {
     }
 
     if (count === 2) {
-      const move = ComputerPlayer.getValidMoves(grid).reduce((accum, element) => {
+      // const move = validMoves.reduce((accum, element) => {
 
-        if (element.row === remaining.row && element.col === remaining.col) {
-          return element;
-        }
+      //   if (element.row === remaining.row && element.col === remaining.col) {
+      //     return element;
+      //   }
 
-        return accum;
-      }, null);
+      //   return accum;
+      // }, null);
 
-      if (move) return move;
+      // if (move) return move;
+
+      return remaining;
     }
 
   }
@@ -295,7 +300,7 @@ class ComputerPlayer {
   }
 
   static findMinIndex(array) {
-    let min = 0;
+    let min = Infinity;
     let index = 0;
 
     for (let i = 0; i < array.length; i++) {
@@ -309,7 +314,7 @@ class ComputerPlayer {
   }
 
   static findMaxIndex(array) {
-    let max = 0;
+    let max = -Infinity;
     let index = 0;
 
     for (let i = 0; i < array.length; i++) {
